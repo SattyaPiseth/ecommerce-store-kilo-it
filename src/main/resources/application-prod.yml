@@ -1,6 +1,25 @@
-server:
-  port: 8000
+app:
+  base-uri: ${APP_BASE_URI:https://sb7.penguim.org/}
 
 spring:
-  mail:
-    email: ${MAIL_EMAIL}
+
+  datasource:
+    username: ${DB_USERNAME}
+    password: ${DB_PASSWORD}
+    url: jdbc:mysql://${DB_HOST:sb7.penguim.org}:${DB_PORT:6667}/${DB_NAME:kilo_it_ecommerce_store
+    driver-class-name: com.mysql.cj.jdbc.Driver
+
+  flyway:
+    enabled: false
+
+  servlet:
+    multipart:
+      max-file-size: 10MB
+      max-request-size: 10MB
+
+  security:
+    user:
+      name: ${BASIC_AUTH_USERNAME}
+      password: ${BASIC_AUTH_PASSWORD}
+    public-key: classpath:certs/public.pem
+    private-key: classpath:certs/private.pem

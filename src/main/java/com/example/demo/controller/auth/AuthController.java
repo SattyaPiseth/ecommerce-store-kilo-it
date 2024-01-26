@@ -1,9 +1,9 @@
-package com.example.demo.controller;
+package com.example.demo.controller.auth;
 
 import com.example.demo.base.BaseController;
 import com.example.demo.base.StructureRS;
 import com.example.demo.model.request.auth.LoginRQ;
-import com.example.demo.service.AuthService;
+import com.example.demo.service.auth.AuthService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
@@ -25,7 +25,6 @@ public class AuthController extends BaseController {
     public ResponseEntity<StructureRS> login(@Validated @RequestBody LoginRQ loginRQ) {
         return response(authService.login(loginRQ));
     }
-
 }
 
 

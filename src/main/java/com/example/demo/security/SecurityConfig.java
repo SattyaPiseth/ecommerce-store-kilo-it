@@ -101,6 +101,7 @@ public class SecurityConfig {
     @Bean
     SecurityFilterChain tokenSecurityFilterChain(HttpSecurity http) throws Exception {
         return http
+
                 .securityMatcher(new AntPathRequestMatcher("/api/auth/**"))
                 .authorizeHttpRequests(auth -> auth.anyRequest().authenticated())
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))

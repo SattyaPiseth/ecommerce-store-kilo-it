@@ -1,8 +1,40 @@
 server:
-  port: 8000
+  port: 7000
+
+app:
+  base-uri: ${APP_BASE_URI:http://34.128.96.120:15000/}
 
 spring:
+
+  datasource:
+    username: ${DB_USERNAME}
+    password: ${DB_PASSWORD}
+    url: jdbc:mysql://${DB_HOST :34.128.96.120}:${DB_PORT :6667}/${DB_NAME :kilo_it_ecommerce_store
+    driver-class-name: com.mysql.cj.jdbc.Driver
+
+  flyway:
+    enabled: false
+
+  security:
+    user:
+      name: ${BASIC_AUTH_USERNAME}
+      password: ${BASIC_AUTH_PASSWORD}
+    public-key: classpath:certs/public.pem
+    private-key: classpath:certs/private.pem
+
+  servlet:
+    multipart:
+      max-file-size: 10MB
+      max-request-size: 10MB
+
   mail:
-    email: dev@gmail.com
-    password: 123
-    multi-config: config1,config2
+    host: smtp.gmail.com
+    port: 587
+    username: pisethsattya33@gmail.com
+    password: nsli hqbp vzua dsgy
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true

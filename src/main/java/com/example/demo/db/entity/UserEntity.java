@@ -4,8 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 import org.springframework.data.annotation.CreatedBy;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedBy;
@@ -20,6 +19,9 @@ import java.time.Instant;
 })
 @Getter
 @Setter
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
 public class UserEntity {
 
     @Id
@@ -27,9 +29,12 @@ public class UserEntity {
     @Column(name = "id", nullable = false)
     private Long id;
 
+    @Column(unique = true)
+    private String uuid;
+
     @Size(max = 255)
     @NotNull
-    @Column(name = "username", nullable = false)
+    @Column(name = "username",nullable = false)
     private String username;
 
     @JsonIgnore
@@ -38,7 +43,7 @@ public class UserEntity {
     private String password;
 
     @Size(max = 100)
-    @Column(name = "email")
+    @Column(name = "email",unique = true,nullable = false)
     private String email;
 
     @Size(max = 100)
@@ -63,6 +68,20 @@ public class UserEntity {
 
     @Column(columnDefinition = "tinyint(1) default 1")
     private Boolean status = Boolean.TRUE;
+
+    @Size(max = 6)
+    @Column(name = "6_digits")
+    private String verifiedCode;
+
+    @Column(name = "verification_token")
+    private String verifiedToken;
+
+
+    @Column(name = "verified",columnDefinition = "boolean default false")
+    private Boolean isVerified;
+
+    @Column(name = "deleted",columnDefinition = "boolean default false")
+    private Boolean isDeleted;
 
     @JsonIgnore
     @ManyToOne(fetch = FetchType.LAZY)
