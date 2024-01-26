@@ -1,0 +1,6 @@
+server:
+  port: 8000
+
+spring:
+  mail:
+    email: ${MAIL_EMAIL}

@@ -1,0 +1,28 @@
+ALTER TABLE `role`
+DROP
+FOREIGN KEY FK_ROLE_ON_CREATED_BY;
+
+ALTER TABLE `role`
+DROP
+FOREIGN KEY FK_ROLE_ON_UPDATED_BY;
+
+ALTER TABLE `role`
+    ADD modified_at datetime NULL;
+
+ALTER TABLE `role`
+    ADD modified_by VARCHAR(255) NULL;
+
+ALTER TABLE `role`
+DROP
+COLUMN updated_at;
+
+ALTER TABLE `role`
+DROP
+COLUMN updated_by;
+
+ALTER TABLE `role`
+DROP
+COLUMN created_by;
+
+ALTER TABLE `role`
+    ADD created_by VARCHAR(255) NULL;
