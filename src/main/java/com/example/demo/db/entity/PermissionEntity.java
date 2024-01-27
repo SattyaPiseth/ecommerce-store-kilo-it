@@ -2,8 +2,7 @@ package com.example.demo.db.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 import java.util.Set;
 
@@ -18,6 +17,9 @@ import java.util.Set;
 })
 @Getter
 @Setter
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
 public class PermissionEntity {
 
     @Id

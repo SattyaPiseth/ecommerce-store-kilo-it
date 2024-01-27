@@ -1,4 +1,4 @@
-package com.example.demo.controller.auth;
+package com.example.demo.controller;
 
 import com.example.demo.base.BaseController;
 import com.example.demo.base.StructureRS;

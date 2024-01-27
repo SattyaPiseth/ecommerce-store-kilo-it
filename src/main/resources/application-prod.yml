@@ -6,8 +6,9 @@ spring:
   datasource:
     username: ${DB_USERNAME}
     password: ${DB_PASSWORD}
-    url: jdbc:mysql://${DB_HOST:sb7.penguim.org}:${DB_PORT:6667}/${DB_NAME:kilo_it_ecommerce_store
+#    url: jdbc:mysql://${DB_HOST:sb7.penguim.org}:${DB_PORT:6667}/${DB_NAME:kilo_it_ecommerce_store
     driver-class-name: com.mysql.cj.jdbc.Driver
+    url: ${DB_URL}
 
   flyway:
     enabled: false
