@@ -1,9 +1,11 @@
 package com.example.demo.db.entity;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 import lombok.*;
 
 import java.util.List;
+import java.util.Set;
 
 /**
  * @author Sattya
@@ -15,6 +17,8 @@ import java.util.List;
 })
 @Getter
 @Setter
+@NoArgsConstructor
+@AllArgsConstructor
 public class CategoryEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -24,13 +28,23 @@ public class CategoryEntity {
     @Column(unique = true,nullable = false)
     private String uuid;
 
-    @Column(name = "category_name",nullable = false)
+    @Column(name = "name",nullable = false)
     private String name;
 
     @Column(columnDefinition = "TEXT")
     private String description;
 
     @OneToMany(mappedBy = "category")
-    private List<ProductEntity> products;
+    private Set<ProductEntity> products;
 
+    @ManyToMany(mappedBy = "categories")
+    private Set<SupplierEntity> suppliers;
+
+    @ManyToMany(fetch = FetchType.LAZY)
+    @JoinTable(name = "categories_has_brands",joinColumns =
+        @JoinColumn(name = "category_id",referencedColumnName = "id"),
+            inverseJoinColumns =
+                @JoinColumn(name = "brand_id",referencedColumnName = "id"))
+    @JsonProperty("brands")
+    private Set<BrandEntity> brands;
 }

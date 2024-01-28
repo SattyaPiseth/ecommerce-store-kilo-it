@@ -2,8 +2,13 @@ package com.example.demo.db.entity;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Size;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
+
+import java.math.BigDecimal;
+import java.util.Set;
 
 /**
  * @author Sattya
@@ -17,6 +22,8 @@ import lombok.Setter;
 })
 @Getter
 @Setter
+@NoArgsConstructor
+@AllArgsConstructor
 public class ProductEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -26,9 +33,10 @@ public class ProductEntity {
     private String uuid;
 
     @Size(max = 30)
-    @Column(name = "pro_code",nullable = false,unique = true)
+    @Column(name = "code",nullable = false,unique = true)
     private String code;
 
+    @Size(max = 150)
     private String name;
 
     @Column(columnDefinition = "TEXT")
@@ -38,9 +46,20 @@ public class ProductEntity {
     private String image;
 
     @Column(name = "unit_price")
-    private Double unitPrice;
+    private BigDecimal unitPrice;
 
     @ManyToOne
     @JoinColumn(name = "cate_id")
     private CategoryEntity category;
+
+    @ManyToOne
+    @JoinColumn(name = "brand_id")
+    private BrandEntity brand;
+
+    @ManyToOne
+    @JoinColumn(name = "supplier_id")
+    private SupplierEntity supplier;
+
+    @OneToMany(mappedBy = "product")
+    private Set<InventoryEntity> inventories;
 }

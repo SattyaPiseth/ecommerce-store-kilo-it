@@ -21,7 +21,6 @@ import java.time.Instant;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@Builder
 public class UserEntity {
 
     @Id

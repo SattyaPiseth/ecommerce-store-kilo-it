@@ -5,7 +5,6 @@ app:
   base-uri: ${APP_BASE_URI:http://localhost:7000/}
 
 spring:
-
   datasource:
     username: root
     password:
