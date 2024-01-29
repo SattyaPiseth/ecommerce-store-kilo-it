@@ -5,6 +5,7 @@ import com.example.demo.base.StructureRS;
 import com.example.demo.constant.MessageConstant;
 import com.example.demo.exception.httpstatus.BadRequestException;
 import com.example.demo.model.request.auth.LoginRQ;
+import com.example.demo.model.request.auth.RegisterRQ;
 import com.example.demo.security.UserPrincipal;
 import com.example.demo.utils.TokenUtils;
 import lombok.RequiredArgsConstructor;
@@ -54,6 +55,12 @@ public class AuthServiceImpl extends BaseService implements AuthService {
         respond.put("token", tokenUtils.generateToken(userPrincipal));
 
         return response(respond);
+    }
+    @Transactional
+    @Override
+    public StructureRS register(RegisterRQ request) {
+
+        return null;
     }
 
 }

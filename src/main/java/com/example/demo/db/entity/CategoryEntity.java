@@ -3,7 +3,12 @@ package com.example.demo.db.entity;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 import lombok.*;
+import org.springframework.data.annotation.CreatedBy;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedBy;
+import org.springframework.data.annotation.LastModifiedDate;
 
+import java.time.Instant;
 import java.util.List;
 import java.util.Set;
 
@@ -33,6 +38,24 @@ public class CategoryEntity {
 
     @Column(columnDefinition = "TEXT")
     private String description;
+
+    @JoinColumn(name = "created_by")
+    @ManyToOne(fetch = FetchType.LAZY)
+    @CreatedBy
+    private UserEntity createdBy;
+
+    @JoinColumn(name = "updated_by")
+    @ManyToOne
+    @LastModifiedBy
+    private UserEntity updatedBy;
+
+    @Column(name = "created_at")
+    @CreatedDate
+    private Instant createdAt;
+
+    @Column(name = "updated_at")
+    @LastModifiedDate
+    private Instant updatedAt;
 
     @OneToMany(mappedBy = "category")
     private Set<ProductEntity> products;

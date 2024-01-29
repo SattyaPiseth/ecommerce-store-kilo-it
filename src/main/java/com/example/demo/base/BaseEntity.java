@@ -5,9 +5,12 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.annotations.CurrentTimestamp;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
+
+import java.time.Instant;
 
 /**
  * @author Sombath
@@ -26,12 +29,13 @@ public abstract class BaseEntity {
     @Column(name = "id", nullable = false)
     private Long id;
 
-    @Column(name = "created_date", nullable = false, updatable = false)
+    @Column(name = "created_at",nullable = false,updatable = false)
     @CreatedDate
-    private long createdDate;
+    @CurrentTimestamp
+    private Instant createdAt;
 
-    @Column(name = "modified_date")
+    @Column(name = "updated_at")
     @LastModifiedDate
-    private long modifiedDate;
-
+    @CurrentTimestamp
+    private Instant updatedAt;
 }

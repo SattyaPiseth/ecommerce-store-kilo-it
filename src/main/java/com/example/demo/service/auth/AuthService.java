@@ -2,6 +2,7 @@ package com.example.demo.service.auth;
 
 import com.example.demo.base.StructureRS;
 import com.example.demo.model.request.auth.LoginRQ;
+import com.example.demo.model.request.auth.RegisterRQ;
 
 /**
  * @author Sattya
@@ -9,4 +10,6 @@ import com.example.demo.model.request.auth.LoginRQ;
  */
 public interface AuthService {
     StructureRS login(LoginRQ request);
+
+    StructureRS register(RegisterRQ request);
 }

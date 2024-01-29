@@ -18,6 +18,11 @@ spring:
     user:
       name: sattya
       password: 123
+
+    allow-origin: "*"
+    allowed-header: Authorization,Content-Type,User-Agent,X-Forwarded
+    allowed-method: POST,PUT,PATCH,DELETE,GET,OPTIONS
+
     public-key: classpath:certs/public.pem
     private-key: classpath:certs/private.pem
 
@@ -25,3 +30,11 @@ spring:
     multipart:
       max-file-size: 10MB
       max-request-size: 10MB
+
+  jpa:
+    show-sql: true
+    open-in-view: false
+    properties:
+      hibernate:
+        query:
+          fail_on_pagination_over_collection_fetch: true

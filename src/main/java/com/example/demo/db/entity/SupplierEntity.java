@@ -7,7 +7,12 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.springframework.data.annotation.CreatedBy;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedBy;
+import org.springframework.data.annotation.LastModifiedDate;
 
+import java.time.Instant;
 import java.util.Set;
 
 /**
@@ -54,6 +59,24 @@ public class SupplierEntity {
     @Size(max = 50)
     @Column(name = "contact_phone",nullable = false)
     private String phone;
+
+    @JoinColumn(name = "created_by")
+    @ManyToOne(fetch = FetchType.LAZY)
+    @CreatedBy
+    private UserEntity createdBy;
+
+    @JoinColumn(name = "updated_by")
+    @ManyToOne
+    @LastModifiedBy
+    private UserEntity updatedBy;
+
+    @Column(name = "created_at")
+    @CreatedDate
+    private Instant createdAt;
+
+    @Column(name = "updated_at")
+    @LastModifiedDate
+    private Instant updatedAt;
 
     @OneToMany(mappedBy = "supplier")
     private Set<ProductEntity> products;

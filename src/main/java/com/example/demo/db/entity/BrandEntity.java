@@ -6,7 +6,12 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.springframework.data.annotation.CreatedBy;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedBy;
+import org.springframework.data.annotation.LastModifiedDate;
 
+import java.time.Instant;
 import java.util.Set;
 
 /**
@@ -30,6 +35,24 @@ public class BrandEntity {
     @Size(max = 100)
     @Column(name = "brand_name",nullable = false)
     private String name;
+
+    @JoinColumn(name = "created_by")
+    @ManyToOne(fetch = FetchType.LAZY)
+    @CreatedBy
+    private UserEntity createdBy;
+
+    @JoinColumn(name = "updated_by")
+    @ManyToOne
+    @LastModifiedBy
+    private UserEntity updatedBy;
+
+    @Column(name = "created_at")
+    @CreatedDate
+    private Instant createdAt;
+
+    @Column(name = "updated_at")
+    @LastModifiedDate
+    private Instant updatedAt;
 
     @ManyToMany(mappedBy = "brands")
     private Set<CategoryEntity> categories;

@@ -6,8 +6,13 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.springframework.data.annotation.CreatedBy;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedBy;
+import org.springframework.data.annotation.LastModifiedDate;
 
 import java.math.BigDecimal;
+import java.time.Instant;
 import java.util.Set;
 
 /**
@@ -47,6 +52,24 @@ public class ProductEntity {
 
     @Column(name = "unit_price")
     private BigDecimal unitPrice;
+
+    @JoinColumn(name = "created_by")
+    @ManyToOne(fetch = FetchType.LAZY)
+    @CreatedBy
+    private UserEntity createdBy;
+
+    @JoinColumn(name = "updated_by")
+    @ManyToOne
+    @LastModifiedBy
+    private UserEntity updatedBy;
+
+    @Column(name = "created_at")
+    @CreatedDate
+    private Instant createdAt;
+
+    @Column(name = "updated_at")
+    @LastModifiedDate
+    private Instant updatedAt;
 
     @ManyToOne
     @JoinColumn(name = "cate_id")
