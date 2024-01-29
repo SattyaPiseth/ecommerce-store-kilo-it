@@ -34,11 +34,6 @@ import java.util.Set;
 @Builder
 public class RoleEntity extends BaseEntity{
 
-//    @Id
-//    @GeneratedValue(strategy = GenerationType.IDENTITY)
-//    @Column(name = "id", nullable = false)
-//    private Long id;
-
     @Column(name = "name", nullable = false)
     private String name;
 
@@ -68,14 +63,4 @@ public class RoleEntity extends BaseEntity{
     @ManyToOne
     @LastModifiedBy
     private UserEntity updatedBy;
-
-//    @Column(name = "created_at")
-//    @CreatedDate
-//    @CurrentTimestamp
-//    private Instant createdAt;
-//
-//    @Column(name = "updated_at")
-//    @LastModifiedDate
-//    @CurrentTimestamp
-//    private Instant updatedAt;
 }
