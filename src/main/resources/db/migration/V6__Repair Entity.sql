@@ -16,5 +16,11 @@ ALTER TABLE users
 ALTER TABLE users
     ADD CONSTRAINT uc_users_uuid UNIQUE (uuid);
 
+ALTER TABLE `role`
+    MODIFY created_at datetime NOT NULL;
+
+ALTER TABLE users
+    MODIFY created_at datetime NOT NULL;
+
 ALTER TABLE users
     MODIFY email VARCHAR (100) NOT NULL;

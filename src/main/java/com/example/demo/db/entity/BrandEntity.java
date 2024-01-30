@@ -1,12 +1,19 @@
 package com.example.demo.db.entity;
 
+import com.example.demo.base.BaseEntity;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.springframework.data.annotation.CreatedBy;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedBy;
+import org.springframework.data.annotation.LastModifiedDate;
 
+import java.time.Instant;
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -21,10 +28,12 @@ import java.util.Set;
 @Table(name = "brands",indexes = {
         @Index(name = "idx_brand_name",columnList = "brand_name",unique = true)
 })
-public class BrandEntity {
+public class BrandEntity extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+    @Column(name = "id", nullable = false)
+    private Long id;
+
     @Column(unique = true,nullable = false)
     private String uuid;
     @Size(max = 100)
@@ -32,8 +41,9 @@ public class BrandEntity {
     private String name;
 
     @ManyToMany(mappedBy = "brands")
-    private Set<CategoryEntity> categories;
+    private List<CategoryEntity> categories;
 
     @OneToMany(mappedBy = "brand")
-    private Set<ProductEntity> products;
+    private List<ProductEntity> products;
+
 }

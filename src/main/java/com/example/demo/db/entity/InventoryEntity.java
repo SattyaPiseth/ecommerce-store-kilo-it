@@ -1,5 +1,6 @@
 package com.example.demo.db.entity;
 
+import com.example.demo.base.BaseEntity;
 import com.example.demo.db.status.InventoryStatus;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Size;
@@ -7,6 +8,8 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.springframework.data.annotation.CreatedBy;
+import org.springframework.data.annotation.LastModifiedBy;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
@@ -27,11 +30,12 @@ import java.time.LocalDate;
         @Index(name = "idx_last_restock_date",columnList = "last_restock_date"),
         @Index(name = "idx_status",columnList = "status")
 })
-public class InventoryEntity {
+public class InventoryEntity extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "inventory_id")
-    private Integer id;
+    @Column(name = "id", nullable = false)
+    private Long id;
+
 
     @Column(name = "unit_cost",nullable = false,precision = 10,scale = 2)
     private BigDecimal unit_cost;
@@ -61,4 +65,5 @@ public class InventoryEntity {
     @ManyToOne
     @JoinColumn(name = "store_id")
     private StoreEntity store;
+
 }

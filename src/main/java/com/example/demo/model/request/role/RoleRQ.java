@@ -1,5 +1,6 @@
 package com.example.demo.model.request.role;
 
+import lombok.Builder;
 import lombok.Data;
 
 /**
@@ -8,6 +9,7 @@ import lombok.Data;
  */
 
 @Data
+@Builder
 public class RoleRQ {
 
     private String name;

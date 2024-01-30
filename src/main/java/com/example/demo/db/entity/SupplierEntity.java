@@ -1,5 +1,6 @@
 package com.example.demo.db.entity;
 
+import com.example.demo.base.BaseEntity;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Size;
@@ -8,7 +9,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.util.Set;
+import java.util.List;
 
 /**
  * @author Sattya
@@ -24,10 +25,11 @@ import java.util.Set;
         @Index(name = "idx_supplier_contact_email",columnList = "contact_email",unique = true),
         @Index(name = "idx_supplier_contact_phone",columnList = "contact_phone",unique = true)
 })
-public class SupplierEntity {
+public class SupplierEntity extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+    @Column(name = "id", nullable = false)
+    private Long id;
 
     @Column(unique = true,nullable = false)
     private String uuid;
@@ -56,10 +58,10 @@ public class SupplierEntity {
     private String phone;
 
     @OneToMany(mappedBy = "supplier")
-    private Set<ProductEntity> products;
+    private List<ProductEntity> products;
 
     @OneToMany(mappedBy = "supplier")
-    private Set<InventoryEntity> inventories;
+    private List<InventoryEntity> inventories;
 
 
     @ManyToMany(fetch = FetchType.LAZY)
@@ -68,6 +70,6 @@ public class SupplierEntity {
             inverseJoinColumns =
                 @JoinColumn(name = "category_id",referencedColumnName = "id"))
     @JsonProperty("categories")
-    private Set<CategoryEntity> categories;
+    private List<CategoryEntity> categories;
 
 }

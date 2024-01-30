@@ -1,13 +1,14 @@
 package com.example.demo.db.entity;
 
+import com.example.demo.base.BaseEntity;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-
 import java.math.BigDecimal;
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -24,9 +25,10 @@ import java.util.Set;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class ProductEntity {
+public class ProductEntity extends BaseEntity{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id", nullable = false)
     private Long id;
 
     @Column(unique = true,nullable = false)
@@ -61,5 +63,6 @@ public class ProductEntity {
     private SupplierEntity supplier;
 
     @OneToMany(mappedBy = "product")
-    private Set<InventoryEntity> inventories;
+    private List<InventoryEntity> inventories;
+
 }

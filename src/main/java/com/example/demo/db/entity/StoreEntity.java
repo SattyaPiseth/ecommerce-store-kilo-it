@@ -1,5 +1,6 @@
 package com.example.demo.db.entity;
 
+import com.example.demo.base.BaseEntity;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
@@ -7,6 +8,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -23,10 +25,11 @@ import java.util.Set;
         @Index(name = "idx_phone_number",columnList = "phone_number",unique = true),
         @Index(name = "idx_email",columnList = "email",unique = true)
 })
-public class StoreEntity {
+public class StoreEntity extends  BaseEntity{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+    @Column(name = "id", nullable = false)
+    private Long id;
 
     @Column(unique = true,nullable = false)
     private String uuid;
@@ -59,6 +62,6 @@ public class StoreEntity {
     private String zipCode;
 
     @OneToMany(mappedBy = "store")
-    private Set<InventoryEntity> inventories;
+    private List<InventoryEntity> inventories;
 
 }

@@ -1,5 +1,6 @@
 package com.example.demo.db.entity;
 
+import com.example.demo.base.BaseEntity;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 import lombok.*;
@@ -19,11 +20,11 @@ import java.util.Set;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class CategoryEntity {
+public class CategoryEntity extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id",nullable = false)
-    private Integer id;
+    @Column(name = "id", nullable = false)
+    private Long id;
 
     @Column(unique = true,nullable = false)
     private String uuid;
@@ -35,10 +36,10 @@ public class CategoryEntity {
     private String description;
 
     @OneToMany(mappedBy = "category")
-    private Set<ProductEntity> products;
+    private List<ProductEntity> products;
 
     @ManyToMany(mappedBy = "categories")
-    private Set<SupplierEntity> suppliers;
+    private List<SupplierEntity> suppliers;
 
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(name = "categories_has_brands",joinColumns =
@@ -46,5 +47,6 @@ public class CategoryEntity {
             inverseJoinColumns =
                 @JoinColumn(name = "brand_id",referencedColumnName = "id"))
     @JsonProperty("brands")
-    private Set<BrandEntity> brands;
+    private List<BrandEntity> brands;
+
 }
