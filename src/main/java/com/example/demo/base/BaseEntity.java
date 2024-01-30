@@ -1,12 +1,15 @@
 package com.example.demo.base;
 
 
+import com.example.demo.db.entity.UserEntity;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.hibernate.annotations.CurrentTimestamp;
+import org.springframework.data.annotation.CreatedBy;
 import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedBy;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
@@ -24,11 +27,6 @@ import java.time.Instant;
 @EntityListeners(AuditingEntityListener.class)
 public abstract class BaseEntity {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id", nullable = false)
-    private Long id;
-
     @Column(name = "created_at",nullable = false,updatable = false)
     @CreatedDate
     @CurrentTimestamp
@@ -38,4 +36,14 @@ public abstract class BaseEntity {
     @LastModifiedDate
     @CurrentTimestamp
     private Instant updatedAt;
+
+    @JoinColumn(name = "created_by")
+    @ManyToOne(fetch = FetchType.LAZY)
+    @CreatedBy
+    private UserEntity createdBy;
+
+    @JoinColumn(name = "updated_by")
+    @ManyToOne
+    @LastModifiedBy
+    private UserEntity updatedBy;
 }

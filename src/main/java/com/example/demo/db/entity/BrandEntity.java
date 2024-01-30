@@ -1,5 +1,6 @@
 package com.example.demo.db.entity;
 
+import com.example.demo.base.BaseEntity;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
@@ -12,6 +13,7 @@ import org.springframework.data.annotation.LastModifiedBy;
 import org.springframework.data.annotation.LastModifiedDate;
 
 import java.time.Instant;
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -26,37 +28,22 @@ import java.util.Set;
 @Table(name = "brands",indexes = {
         @Index(name = "idx_brand_name",columnList = "brand_name",unique = true)
 })
-public class BrandEntity {
+public class BrandEntity extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+    @Column(name = "id", nullable = false)
+    private Long id;
+
     @Column(unique = true,nullable = false)
     private String uuid;
     @Size(max = 100)
     @Column(name = "brand_name",nullable = false)
     private String name;
 
-    @JoinColumn(name = "created_by")
-    @ManyToOne(fetch = FetchType.LAZY)
-    @CreatedBy
-    private UserEntity createdBy;
-
-    @JoinColumn(name = "updated_by")
-    @ManyToOne
-    @LastModifiedBy
-    private UserEntity updatedBy;
-
-    @Column(name = "created_at")
-    @CreatedDate
-    private Instant createdAt;
-
-    @Column(name = "updated_at")
-    @LastModifiedDate
-    private Instant updatedAt;
-
     @ManyToMany(mappedBy = "brands")
-    private Set<CategoryEntity> categories;
+    private List<CategoryEntity> categories;
 
     @OneToMany(mappedBy = "brand")
-    private Set<ProductEntity> products;
+    private List<ProductEntity> products;
+
 }

@@ -2,6 +2,7 @@ package com.example.demo.security;
 
 import com.example.demo.config.property.RsaKeyProperties;
 import com.example.demo.db.entity.UserEntity;
+import com.nimbusds.jose.JOSEException;
 import com.nimbusds.jose.jwk.JWK;
 import com.nimbusds.jose.jwk.JWKSet;
 import com.nimbusds.jose.jwk.RSAKey;
@@ -102,7 +103,8 @@ public class SecurityConfig {
     SecurityFilterChain tokenSecurityFilterChain(HttpSecurity http) throws Exception {
         return http
 
-                .securityMatcher(new AntPathRequestMatcher("/api/auth/**"))
+                .securityMatcher(new AntPathRequestMatcher("/api/v1/auth/**"))
+//                .authorizeHttpRequests(auth->auth.requestMatchers("/api/v1/files/**","/file/**","/auth/**","index.html").permitAll().anyRequest().authenticated())
                 .authorizeHttpRequests(auth -> auth.anyRequest().authenticated())
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .userDetailsService(inMemoryUser())

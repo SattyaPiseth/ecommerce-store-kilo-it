@@ -1,14 +1,10 @@
 package com.example.demo.db.entity;
 
+import com.example.demo.base.BaseEntity;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 import lombok.*;
-import org.springframework.data.annotation.CreatedBy;
-import org.springframework.data.annotation.CreatedDate;
-import org.springframework.data.annotation.LastModifiedBy;
-import org.springframework.data.annotation.LastModifiedDate;
 
-import java.time.Instant;
 import java.util.List;
 import java.util.Set;
 
@@ -24,11 +20,11 @@ import java.util.Set;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class CategoryEntity {
+public class CategoryEntity extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id",nullable = false)
-    private Integer id;
+    @Column(name = "id", nullable = false)
+    private Long id;
 
     @Column(unique = true,nullable = false)
     private String uuid;
@@ -39,29 +35,11 @@ public class CategoryEntity {
     @Column(columnDefinition = "TEXT")
     private String description;
 
-    @JoinColumn(name = "created_by")
-    @ManyToOne(fetch = FetchType.LAZY)
-    @CreatedBy
-    private UserEntity createdBy;
-
-    @JoinColumn(name = "updated_by")
-    @ManyToOne
-    @LastModifiedBy
-    private UserEntity updatedBy;
-
-    @Column(name = "created_at")
-    @CreatedDate
-    private Instant createdAt;
-
-    @Column(name = "updated_at")
-    @LastModifiedDate
-    private Instant updatedAt;
-
     @OneToMany(mappedBy = "category")
-    private Set<ProductEntity> products;
+    private List<ProductEntity> products;
 
     @ManyToMany(mappedBy = "categories")
-    private Set<SupplierEntity> suppliers;
+    private List<SupplierEntity> suppliers;
 
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(name = "categories_has_brands",joinColumns =
@@ -69,5 +47,6 @@ public class CategoryEntity {
             inverseJoinColumns =
                 @JoinColumn(name = "brand_id",referencedColumnName = "id"))
     @JsonProperty("brands")
-    private Set<BrandEntity> brands;
+    private List<BrandEntity> brands;
+
 }

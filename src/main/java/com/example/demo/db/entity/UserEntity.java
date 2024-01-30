@@ -6,14 +6,7 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import lombok.*;
-import org.hibernate.annotations.CurrentTimestamp;
-import org.springframework.data.annotation.CreatedBy;
-import org.springframework.data.annotation.CreatedDate;
-import org.springframework.data.annotation.LastModifiedBy;
-import org.springframework.data.annotation.LastModifiedDate;
-import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
-import java.time.Instant;
 
 @Entity
 @Table(name = "users", indexes = {
@@ -24,13 +17,13 @@ import java.time.Instant;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-//@EntityListeners(AuditingEntityListener.class)
+@Builder
 public class UserEntity extends BaseEntity{
 
-//    @Id
-//    @GeneratedValue(strategy = GenerationType.IDENTITY)
-//    @Column(name = "id", nullable = false)
-//    private Long id;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id", nullable = false)
+    private Long id;
 
     @Column(unique = true)
     private String uuid;
@@ -76,7 +69,7 @@ public class UserEntity extends BaseEntity{
     @Column(name = "6_digits")
     private String verifiedCode;
 
-    @Column(name = "verification_token")
+    @Column(name = "verification_token",unique = true)
     private String verifiedToken;
 
 
@@ -91,23 +84,4 @@ public class UserEntity extends BaseEntity{
     @JoinColumn(name = "role_id", nullable = false)
     private RoleEntity roleEntity;
 
-    @JoinColumn(name = "created_by")
-    @ManyToOne(fetch = FetchType.LAZY)
-    @CreatedBy
-    private UserEntity createdBy;
-
-    @JoinColumn(name = "updated_by")
-    @ManyToOne
-    @LastModifiedBy
-    private UserEntity updatedBy;
-
-//    @Column(name = "created_at")
-//    @CreatedDate
-//    @CurrentTimestamp
-//    private Instant createdAt;
-//
-//    @Column(name = "updated_at")
-//    @LastModifiedDate
-//    @CurrentTimestamp
-//    private Instant updatedAt;
 }

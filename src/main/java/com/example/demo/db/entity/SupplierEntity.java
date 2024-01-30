@@ -1,5 +1,6 @@
 package com.example.demo.db.entity;
 
+import com.example.demo.base.BaseEntity;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Size;
@@ -7,13 +8,8 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.springframework.data.annotation.CreatedBy;
-import org.springframework.data.annotation.CreatedDate;
-import org.springframework.data.annotation.LastModifiedBy;
-import org.springframework.data.annotation.LastModifiedDate;
 
-import java.time.Instant;
-import java.util.Set;
+import java.util.List;
 
 /**
  * @author Sattya
@@ -29,10 +25,11 @@ import java.util.Set;
         @Index(name = "idx_supplier_contact_email",columnList = "contact_email",unique = true),
         @Index(name = "idx_supplier_contact_phone",columnList = "contact_phone",unique = true)
 })
-public class SupplierEntity {
+public class SupplierEntity extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+    @Column(name = "id", nullable = false)
+    private Long id;
 
     @Column(unique = true,nullable = false)
     private String uuid;
@@ -60,29 +57,11 @@ public class SupplierEntity {
     @Column(name = "contact_phone",nullable = false)
     private String phone;
 
-    @JoinColumn(name = "created_by")
-    @ManyToOne(fetch = FetchType.LAZY)
-    @CreatedBy
-    private UserEntity createdBy;
-
-    @JoinColumn(name = "updated_by")
-    @ManyToOne
-    @LastModifiedBy
-    private UserEntity updatedBy;
-
-    @Column(name = "created_at")
-    @CreatedDate
-    private Instant createdAt;
-
-    @Column(name = "updated_at")
-    @LastModifiedDate
-    private Instant updatedAt;
+    @OneToMany(mappedBy = "supplier")
+    private List<ProductEntity> products;
 
     @OneToMany(mappedBy = "supplier")
-    private Set<ProductEntity> products;
-
-    @OneToMany(mappedBy = "supplier")
-    private Set<InventoryEntity> inventories;
+    private List<InventoryEntity> inventories;
 
 
     @ManyToMany(fetch = FetchType.LAZY)
@@ -91,6 +70,6 @@ public class SupplierEntity {
             inverseJoinColumns =
                 @JoinColumn(name = "category_id",referencedColumnName = "id"))
     @JsonProperty("categories")
-    private Set<CategoryEntity> categories;
+    private List<CategoryEntity> categories;
 
 }

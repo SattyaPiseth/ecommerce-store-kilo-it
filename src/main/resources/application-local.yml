@@ -3,6 +3,7 @@ server:
 
 app:
   base-uri: ${APP_BASE_URI:http://localhost:7000/}
+  api-version: ${API_VERSION:api/v1/}
 
 spring:
   datasource:
@@ -38,3 +39,15 @@ spring:
       hibernate:
         query:
           fail_on_pagination_over_collection_fetch: true
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    username: pisethsattya33@gmail.com
+    password: nsli hqbp vzua dsgy
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
+            required: true

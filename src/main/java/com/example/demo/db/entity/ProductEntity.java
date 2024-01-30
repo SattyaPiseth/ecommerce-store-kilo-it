@@ -1,18 +1,14 @@
 package com.example.demo.db.entity;
 
+import com.example.demo.base.BaseEntity;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.springframework.data.annotation.CreatedBy;
-import org.springframework.data.annotation.CreatedDate;
-import org.springframework.data.annotation.LastModifiedBy;
-import org.springframework.data.annotation.LastModifiedDate;
-
 import java.math.BigDecimal;
-import java.time.Instant;
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -29,9 +25,10 @@ import java.util.Set;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class ProductEntity {
+public class ProductEntity extends BaseEntity{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id", nullable = false)
     private Long id;
 
     @Column(unique = true,nullable = false)
@@ -53,24 +50,6 @@ public class ProductEntity {
     @Column(name = "unit_price")
     private BigDecimal unitPrice;
 
-    @JoinColumn(name = "created_by")
-    @ManyToOne(fetch = FetchType.LAZY)
-    @CreatedBy
-    private UserEntity createdBy;
-
-    @JoinColumn(name = "updated_by")
-    @ManyToOne
-    @LastModifiedBy
-    private UserEntity updatedBy;
-
-    @Column(name = "created_at")
-    @CreatedDate
-    private Instant createdAt;
-
-    @Column(name = "updated_at")
-    @LastModifiedDate
-    private Instant updatedAt;
-
     @ManyToOne
     @JoinColumn(name = "cate_id")
     private CategoryEntity category;
@@ -84,5 +63,6 @@ public class ProductEntity {
     private SupplierEntity supplier;
 
     @OneToMany(mappedBy = "product")
-    private Set<InventoryEntity> inventories;
+    private List<InventoryEntity> inventories;
+
 }

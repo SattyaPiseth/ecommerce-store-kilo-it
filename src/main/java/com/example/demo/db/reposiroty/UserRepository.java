@@ -9,4 +9,9 @@ public interface UserRepository extends JpaRepository<UserEntity, Long> {
     @Query("select u from UserEntity u join fetch u.roleEntity role left join fetch role.permissionEntities where u.username = :username")
     UserEntity findByUsernameFetchRolePermission(@Param("username") String username);
 
+    @Query("""
+            select (count(u) > 0) from UserEntity u
+            where u.username = :username or u.email = :email and u.isDeleted = false""")
+    boolean existsByUsernameOrEmailAndIsDeletedFalse(@Param("username") String username, @Param("email") String email);
+
 }

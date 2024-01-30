@@ -30,14 +30,13 @@ import java.util.Set;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-//@EntityListeners(AuditingEntityListener.class)
 @Builder
+@EntityListeners(AuditingEntityListener.class)
 public class RoleEntity extends BaseEntity{
-
-//    @Id
-//    @GeneratedValue(strategy = GenerationType.IDENTITY)
-//    @Column(name = "id", nullable = false)
-//    private Long id;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id", nullable = false)
+    private Long id;
 
     @Column(name = "name", nullable = false)
     private String name;
@@ -59,23 +58,4 @@ public class RoleEntity extends BaseEntity{
     @JsonProperty("permissions")
     private List<PermissionEntity> permissionEntities = new ArrayList<>();
 
-    @JoinColumn(name = "created_by")
-    @ManyToOne(fetch = FetchType.LAZY)
-    @CreatedBy
-    private UserEntity createdBy;
-
-    @JoinColumn(name = "updated_by")
-    @ManyToOne
-    @LastModifiedBy
-    private UserEntity updatedBy;
-
-//    @Column(name = "created_at")
-//    @CreatedDate
-//    @CurrentTimestamp
-//    private Instant createdAt;
-//
-//    @Column(name = "updated_at")
-//    @LastModifiedDate
-//    @CurrentTimestamp
-//    private Instant updatedAt;
 }
