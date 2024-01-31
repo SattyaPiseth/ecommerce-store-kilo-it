@@ -16,7 +16,6 @@ import com.example.demo.utils.TokenUtils;
 import jakarta.mail.MessagingException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.HttpStatusCode;
@@ -171,21 +170,6 @@ public class AuthServiceImpl extends BaseService implements AuthService {
     @Override
     public boolean verifyResetToken(String token) {
         return authRepository.existsByVerifiedTokenAndIsDeletedFalseAndStatusTrue(token);
-    }
-    @Transactional
-    @Override
-    public StructureRS changePassword(ChangePasswordRQ request) {
-
-        UserEntity userEntity = authRepository.findByEmailAndIsDeletedFalse(request.getEmail())
-                .orElseThrow(() -> new BadRequestException(MessageConstant.AUTH.EMAIL_NOT_FOUND));
-
-        if (!passwordEncoder.matches(request.getOldPassword(),userEntity.getPassword())){
-            throw new BadRequestException(MessageConstant.AUTH.PASSWORD_NOT_MATCH);
-        }
-
-        userEntity.setPassword(passwordEncoder.encode(request.getNewPassword()));
-        authRepository.save(userEntity);
-        return response(HttpStatus.OK,MessageConstant.SUCCESSFULLY);
     }
 
     private Mail<String> createPasswordResetEmail(String recipient, String resetLink) {

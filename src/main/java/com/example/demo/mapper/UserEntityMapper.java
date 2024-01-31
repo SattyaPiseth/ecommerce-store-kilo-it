@@ -2,7 +2,9 @@ package com.example.demo.mapper;
 
 import com.example.demo.db.entity.UserEntity;
 import com.example.demo.model.request.auth.RegisterRQ;
+import com.example.demo.model.response.user.UserProfileRS;
 import org.mapstruct.Mapper;
+import org.mapstruct.Mapping;
 
 /**
  * @author Sattya
@@ -12,4 +14,8 @@ import org.mapstruct.Mapper;
 public interface UserEntityMapper {
     UserEntity fromRegisterRQ(RegisterRQ registerRQ);
     RegisterRQ toRegisterRQ(UserEntity userEntity);
+
+    @Mapping(target = "roleName", source = "roleEntity.name")
+    @Mapping(target = "roleCode", source = "roleEntity.code")
+    UserProfileRS toUserProfileRS(UserEntity userEntity);
 }

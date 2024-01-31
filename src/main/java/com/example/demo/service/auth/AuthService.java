@@ -2,7 +2,6 @@ package com.example.demo.service.auth;
 
 import com.example.demo.base.StructureRS;
 import com.example.demo.model.request.auth.*;
-import com.example.demo.model.request.mail.VerifyCodeDto;
 import com.example.demo.model.request.mail.VerifyRQ;
 import jakarta.mail.MessagingException;
 
@@ -58,10 +57,4 @@ public interface AuthService {
      */
     boolean verifyResetToken(String token);
 
-    /**
-     * Change password service
-     * @param request of request data from client
-     * @return message for client
-     */
-    StructureRS changePassword(ChangePasswordRQ request);
 }
