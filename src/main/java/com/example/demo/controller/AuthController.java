@@ -16,6 +16,8 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
 import javax.management.relation.RoleNotFoundException;
+import java.time.LocalDate;
+import java.util.Locale;
 import java.util.Map;
 
 /**
@@ -71,15 +73,9 @@ public class AuthController extends BaseController {
     public StructureRS resetPassword(@RequestParam("token") String token,
                                      @RequestBody @Validated ResetPasswordRQ request){
         if (!authService.verifyResetToken(token)){
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, MessageConstant.AUTH.TOKEN_INVALID);
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, MessageConstant.AUTH.INVALID_TOKEN);
         }
         return response(authService.resetPassword(request)).getBody();
-    }
-
-    @ResponseStatus(HttpStatus.OK)
-    @PutMapping("/change-password")
-    public StructureRS changePassword(@RequestBody @Validated ChangePasswordRQ request){
-        return response(authService.changePassword(request)).getBody();
     }
 }
 

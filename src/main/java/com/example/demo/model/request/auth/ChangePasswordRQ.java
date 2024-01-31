@@ -10,9 +10,9 @@ import lombok.Getter;
  */
 @Getter
 public class ChangePasswordRQ {
-    @NotBlank
-    @Email
-    String email;
+//    @NotBlank
+//    @Email
+//    String email;
     @NotBlank
     String oldPassword;
     @NotBlank

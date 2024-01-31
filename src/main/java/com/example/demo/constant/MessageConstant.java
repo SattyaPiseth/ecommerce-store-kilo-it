@@ -18,12 +18,12 @@ public class MessageConstant {
         public final static String USERNAME_EXIST = "Username already exist";
         public final static String PASSWORD_NOT_MATCH = "Password not match";
         public final static String RESET_PASSWORD_SUCCESSFULLY = "Reset password successfully";
+        public final static String CHANGE_PASSWORD_SUCCESSFULLY = "Change password successfully";
         public final static String RESET_PASSWORD_FAILED = "Reset password failed";
         public final static String EXPIRED_TOKEN = "Expired token";
         public final static String INVALID_TOKEN = "Invalid token";
         public final static String INVALID_REFRESH_TOKEN = "Invalid refresh token";
         public final static String TOKEN_NOT_FOUND = "Token not found";
-        public final static String TOKEN_INVALID = "Token invalid";
         public final static String TOKEN_EXPIRED = "Token expired";
         public final static String VERIFY_CODE_NOT_FOUND = "Verify code not found";
         public final static String VERIFY_CODE_NOT_MATCH = "Verify code not match";

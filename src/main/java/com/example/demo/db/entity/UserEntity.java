@@ -80,7 +80,7 @@ public class UserEntity extends BaseEntity{
     private Boolean isDeleted;
 
     @JsonIgnore
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "role_id", nullable = false)
     private RoleEntity roleEntity;
 

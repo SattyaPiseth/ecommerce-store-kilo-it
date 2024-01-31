@@ -39,5 +39,4 @@ public interface AuthRepository extends JpaRepository<UserEntity,Long> {
             select (count(u) > 0) from UserEntity u
             where u.verifiedToken = :verifiedToken and u.isDeleted = false and u.status = true""")
     boolean existsByVerifiedTokenAndIsDeletedFalseAndStatusTrue(@Param("verifiedToken") String verifiedToken);
-
 }
