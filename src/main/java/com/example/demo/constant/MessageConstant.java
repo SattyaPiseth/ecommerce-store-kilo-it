@@ -7,6 +7,7 @@ package com.example.demo.constant;
 public class MessageConstant {
 
     public static final String SUCCESSFULLY = "Successfully";
+    public static final String ITEMNOTFOUND = "Item Not Found";
     public static final String ALL = "ALL";
 
     public static class AUTH {

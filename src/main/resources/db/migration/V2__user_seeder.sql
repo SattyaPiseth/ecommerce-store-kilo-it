@@ -25,5 +25,5 @@ values (1, 1),
 
 insert into users (id, username, password, email, name, bio, avatar, address, phone, status, role_id, created_by,
                    updated_by, created_at, updated_at)
-values (1, 'sombath', '1', 'sombath@gmail.com', 'KHOEM Sombath', 'senior back-end developer', null, 'Phnom Penh',
+values (1, 'sombath', '{bcrypt}$2a$12$WzqGQ7S3UDAZSJTJ5xojk.p3WkiQH.CuJEhv7O4TB4yTKyu0ehkDq', 'sombath@gmail.com', 'KHOEM Sombath', 'senior back-end developer', null, 'Phnom Penh',
         '0123456789', 1, 1, null, null, current_timestamp, current_timestamp);
