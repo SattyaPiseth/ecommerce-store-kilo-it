@@ -10,6 +10,6 @@ public interface CategoryService {
      */
     StructureRS getCategory(BaseListingRQ baseListingRQ);
     void addCategory(CategoryRQ categoryRQ);
-    void updateCategory( Integer id , CategoryRQ categoryRQ);
-    void deleteCategory( Integer id);
+    void updateCategory( String uuid , CategoryRQ categoryRQ);
+    void deleteCategory( String uuid);
 }

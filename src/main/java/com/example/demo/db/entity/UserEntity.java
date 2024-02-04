@@ -75,7 +75,6 @@ public class UserEntity {
     @Column(name = "verification_token")
     private String verifiedToken;
 
-
     @Column(name = "verified",columnDefinition = "boolean default false")
     private Boolean isVerified;
 

@@ -24,5 +24,9 @@ public class MessageConstant {
         public static final String ROLE_NOT_FOUND = "Role could not be found";
         public static final String ROLE_DELETED_SUCCESSFULLY = "Role has been deleted";
     }
+   public static class CATEGORY{
+        public final static String CATEGORYIDALREADYEXIST= "Category already exist";
+        public static final String ITEMCATEGORYNOTFOUND = "Item Not Found";
 
+   }
 }

@@ -16,6 +16,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.time.Instant;
 import java.util.UUID;
 
 @Service
@@ -29,7 +30,7 @@ private final CategoryRepository categoryRepository;
 
     @Override
     public StructureRS getCategory(BaseListingRQ baseListingRQ) {
-        Page<CategoryEntityInfo>categoryEntityInfos=categoryRepository.findByNameContains(baseListingRQ.getQuery(),baseListingRQ.getPageable() );
+        Page<CategoryEntityInfo>categoryEntityInfos=categoryRepository.findByNameContainsAndIsDeletedFalse(baseListingRQ.getQuery(),baseListingRQ.getPageable() );
         categoryEntityInfos.getContent();
        return new StructureRS(categoryEntityInfos);
     }
@@ -37,12 +38,51 @@ private final CategoryRepository categoryRepository;
     @Override
     @Transactional
     public void addCategory(CategoryRQ categoryRQ) {
-        boolean isExisted = categoryRepository.existsByNameStartsWith(categoryRQ.getName());
+        boolean isExisted = categoryRepository.existsByNameAndIsDeletedFalse(categoryRQ.getName());
+        boolean checkNameandTure = categoryRepository.existsByNameAndIsDeletedTrue(categoryRQ.getName());
         if (isExisted){
-            throw new ResponseStatusException(HttpStatus.CONFLICT,"name existed");
+            throw new BadRequestException(MessageConstant.CATEGORY.CATEGORYIDALREADYEXIST);
         }
-        CategoryEntity categoryEntity = new CategoryEntity();
-        categoryEntity.setUuid(UUID.randomUUID().toString());
+        /**
+         * issue here have the same name cannot update deleteAt to false
+         */
+
+//        else if (checkNameandTure) {
+//            CategoryEntity changeDeleted = new CategoryEntity();
+//            changeDeleted.setName(categoryRQ.getName());
+//            changeDeleted.setDescription(categoryRQ.getDescription());
+//            changeDeleted.setIsDeleted(false);
+//            categoryRepository.save(changeDeleted);
+//        }
+        else{
+            CategoryEntity categoryEntity = new CategoryEntity();
+            categoryEntity.setUuid(UUID.randomUUID().toString());
+            categoryEntity.setName(categoryRQ.getName());
+            categoryEntity.setDescription(categoryRQ.getDescription());
+            categoryEntity.setIsDeleted(false);
+            categoryRepository.save(categoryEntity);
+        }
+
+
+
+/**
+ * still on testing
+ * issue not message error return if it existed
+ */
+//        categoryRepository.existsByNameStartsWith(categoryRQ.getName()
+//                .describeConstable().orElseThrow(()-> new BadRequestException(MessageConstant.CATEGORY.CATEGORYIDALREADYEXIST)));
+//        CategoryEntity newcategroy= new CategoryEntity();
+//        newcategroy.setUuid(UUID.randomUUID().toString());
+//        newcategroy.setName(categoryRQ.getName());
+//        newcategroy.setDescription(categoryRQ.getDescription());
+//        categoryRepository.save(newcategroy);
+    }
+
+    @Override
+    @Transactional
+    public void updateCategory(String uuid, CategoryRQ categoryRQ) {
+        CategoryEntity categoryEntity = categoryRepository.findByUuid(uuid)
+                .orElseThrow(() -> new BadRequestException(MessageConstant.CATEGORY.ITEMCATEGORYNOTFOUND));
         categoryEntity.setName(categoryRQ.getName());
         categoryEntity.setDescription(categoryRQ.getDescription());
         categoryRepository.save(categoryEntity);
@@ -50,22 +90,11 @@ private final CategoryRepository categoryRepository;
 
     @Override
     @Transactional
-    public void updateCategory(Integer id, CategoryRQ categoryRQ) {
-        CategoryEntity categoryEntity = categoryRepository.findById(id)
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Category id not found"));
-        categoryEntity.setName(categoryRQ.getName());
-        categoryEntity.setDescription(categoryRQ.getDescription());
+    public void deleteCategory(String uuid) {
+        CategoryEntity categoryEntity= categoryRepository.findByUuid(uuid)
+                .orElseThrow(()-> new BadRequestException(MessageConstant.CATEGORY.ITEMCATEGORYNOTFOUND));
+        categoryEntity.setDelete_at(Instant.now());
+        categoryEntity.setIsDeleted(true);
         categoryRepository.save(categoryEntity);
-    }
-
-    @Override
-    @Transactional
-    public void deleteCategory(Integer id) {
-        CategoryEntity categoryEntity= categoryRepository.findById(id)
-                .orElseThrow(()-> new BadRequestException(MessageConstant.ITEMNOTFOUND));
-//                .orElseThrow(()->new ResponseStatusException(HttpStatus.NOT_FOUND,"Category id not found"));
-
-        categoryRepository.deleteById(categoryEntity.getId());
-
     }
 }

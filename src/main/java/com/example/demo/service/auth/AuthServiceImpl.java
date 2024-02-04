@@ -34,7 +34,7 @@ public class AuthServiceImpl extends BaseService implements AuthService {
     private final TokenUtils tokenUtils;
     private final PasswordEncoder passwordEncoder;
 
-    @Value("${app.base-uri}")
+    @Value("${APP_BASE_URI:http://localhost:7000/}")
     private String appBaseUri;
 
     @Transactional

@@ -3,10 +3,12 @@ package com.example.demo.db.entity;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.annotations.CurrentTimestamp;
 import org.hibernate.annotations.SQLDelete;
 import org.hibernate.annotations.Where;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
+import java.time.Instant;
 import java.util.List;
 import java.util.Set;
 
@@ -15,6 +17,7 @@ import java.util.Set;
  * create at 1/27/2024 1:38 PM
  */
 @Entity
+@EntityListeners(AuditingEntityListener.class)
 //@SQLDelete(sql = "update categories set deleted =true where id=?")
 //@Where(clause = "deleted=false")
 @Table(name = "categories",indexes = {
@@ -52,5 +55,8 @@ public class CategoryEntity {
                 @JoinColumn(name = "brand_id",referencedColumnName = "id"))
     @JsonProperty("brands")
     private Set<BrandEntity> brands;
+    @Column(name = "deleted",columnDefinition = "boolean default false")
+    private Boolean isDeleted;
+    private Instant delete_at;
 
 }
