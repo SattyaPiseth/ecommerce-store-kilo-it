@@ -39,22 +39,17 @@ private final CategoryRepository categoryRepository;
     @Transactional
     public void addCategory(CategoryRQ categoryRQ) {
         boolean isExisted = categoryRepository.existsByNameAndIsDeletedFalse(categoryRQ.getName());
-        boolean checkNameandTure = categoryRepository.existsByNameAndIsDeletedTrue(categoryRQ.getName());
+//        boolean checkNameandTure = categoryRepository.existsByNameAndIsDeletedTrue(categoryRQ.getName());
+        CategoryEntity existingDeletedCategory = categoryRepository.findByNameAndIsDeletedTrue(categoryRQ.getName());
         if (isExisted){
             throw new BadRequestException(MessageConstant.CATEGORY.CATEGORYIDALREADYEXIST);
         }
-        /**
-         * issue here have the same name cannot update deleteAt to false
-         */
-
-//        else if (checkNameandTure) {
-//            CategoryEntity changeDeleted = new CategoryEntity();
-//            changeDeleted.setName(categoryRQ.getName());
-//            changeDeleted.setDescription(categoryRQ.getDescription());
-//            changeDeleted.setIsDeleted(false);
-//            categoryRepository.save(changeDeleted);
-//        }
-        else{
+        else if (existingDeletedCategory != null) {
+            existingDeletedCategory.setName(categoryRQ.getName());
+            existingDeletedCategory.setDescription(categoryRQ.getDescription());
+            existingDeletedCategory.setIsDeleted(false);
+            categoryRepository.save(existingDeletedCategory);
+        }else{
             CategoryEntity categoryEntity = new CategoryEntity();
             categoryEntity.setUuid(UUID.randomUUID().toString());
             categoryEntity.setName(categoryRQ.getName());
