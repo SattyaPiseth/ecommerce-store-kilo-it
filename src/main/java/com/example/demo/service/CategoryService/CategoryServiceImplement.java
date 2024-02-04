@@ -39,7 +39,6 @@ private final CategoryRepository categoryRepository;
     @Transactional
     public void addCategory(CategoryRQ categoryRQ) {
         boolean isExisted = categoryRepository.existsByNameAndIsDeletedFalse(categoryRQ.getName());
-//        boolean checkNameandTure = categoryRepository.existsByNameAndIsDeletedTrue(categoryRQ.getName());
         CategoryEntity existingDeletedCategory = categoryRepository.findByNameAndIsDeletedTrue(categoryRQ.getName());
         if (isExisted){
             throw new BadRequestException(MessageConstant.CATEGORY.CATEGORYIDALREADYEXIST);
