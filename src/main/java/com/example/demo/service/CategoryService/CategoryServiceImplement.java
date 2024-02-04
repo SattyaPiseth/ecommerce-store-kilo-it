@@ -40,15 +40,14 @@ private final CategoryRepository categoryRepository;
     public void addCategory(CategoryRQ categoryRQ) {
         boolean isExisted = categoryRepository.existsByNameAndIsDeletedFalse(categoryRQ.getName());
         CategoryEntity existingDeletedCategory = categoryRepository.findByNameAndIsDeletedTrue(categoryRQ.getName());
-        if (isExisted){
+        if (isExisted) {
             throw new BadRequestException(MessageConstant.CATEGORY.CATEGORYIDALREADYEXIST);
-        }
-        else if (existingDeletedCategory != null) {
+        } else if (existingDeletedCategory != null) {
             existingDeletedCategory.setName(categoryRQ.getName());
             existingDeletedCategory.setDescription(categoryRQ.getDescription());
             existingDeletedCategory.setIsDeleted(false);
             categoryRepository.save(existingDeletedCategory);
-        }else{
+        } else {
             CategoryEntity categoryEntity = new CategoryEntity();
             categoryEntity.setUuid(UUID.randomUUID().toString());
             categoryEntity.setName(categoryRQ.getName());
@@ -56,20 +55,6 @@ private final CategoryRepository categoryRepository;
             categoryEntity.setIsDeleted(false);
             categoryRepository.save(categoryEntity);
         }
-
-
-
-/**
- * still on testing
- * issue not message error return if it existed
- */
-//        categoryRepository.existsByNameStartsWith(categoryRQ.getName()
-//                .describeConstable().orElseThrow(()-> new BadRequestException(MessageConstant.CATEGORY.CATEGORYIDALREADYEXIST)));
-//        CategoryEntity newcategroy= new CategoryEntity();
-//        newcategroy.setUuid(UUID.randomUUID().toString());
-//        newcategroy.setName(categoryRQ.getName());
-//        newcategroy.setDescription(categoryRQ.getDescription());
-//        categoryRepository.save(newcategroy);
     }
 
     @Override
