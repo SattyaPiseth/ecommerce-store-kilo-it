@@ -21,7 +21,7 @@ public class VerifyCodeController {
                                  @RequestParam String email){
         modelMap.addAttribute("verifyCodeDto",verifyCodeDto);
         modelMap.addAttribute("email",email);
-        return "auth/verify-code";
+        return "auth/resend-verify-code";
     }
     @PostMapping("auth/verify")
     public String doVerifyCode(VerifyCodeDto verifyCodeDto,

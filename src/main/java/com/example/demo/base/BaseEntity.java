@@ -14,6 +14,7 @@ import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import java.time.Instant;
+import java.util.Date;
 
 /**
  * @author Sombath
@@ -27,15 +28,16 @@ import java.time.Instant;
 @EntityListeners(AuditingEntityListener.class)
 public abstract class BaseEntity {
 
+    @Temporal(TemporalType.TIMESTAMP)
+    @CurrentTimestamp
     @Column(name = "created_at",nullable = false,updatable = false)
     @CreatedDate
-    @CurrentTimestamp
     private Instant createdAt;
 
+    @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "updated_at")
     @LastModifiedDate
-    @CurrentTimestamp
-    private Instant updatedAt;
+    private Date updatedAt;
 
     @JoinColumn(name = "created_by")
     @ManyToOne(fetch = FetchType.LAZY)

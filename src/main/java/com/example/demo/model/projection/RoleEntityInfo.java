@@ -14,17 +14,18 @@ public interface RoleEntityInfo {
 
     String getCode();
 
-    @JsonProperty("permission")
-    List<PermissionEntityInfo> getPermissionEntities();
+//    @JsonProperty("permission")
+//    List<PermissionEntityInfo> getPermissionEntities();
+//
+//    /**
+//     * Projection for {@link com.example.demo.db.entity.PermissionEntity}
+//     */
+//    interface PermissionEntityInfo {
+//        Long getId();
+//
+//        String getName();
+//
+//        String getModule();
+//    }
 
-    /**
-     * Projection for {@link com.example.demo.db.entity.PermissionEntity}
-     */
-    interface PermissionEntityInfo {
-        Long getId();
-
-        String getName();
-
-        String getModule();
-    }
 }

@@ -1,4 +1,4 @@
-package com.example.demo.db.reposiroty;
+package com.example.demo.db.repository;
 
 import com.example.demo.db.entity.RoleEntity;
 import com.example.demo.model.projection.RoleEntityInfo;
@@ -15,5 +15,6 @@ public interface RoleRepository extends JpaRepository<RoleEntity, Long> {
 
     @Query("select (count(r) > 0) from RoleEntity r where upper(r.name) = upper(:name) and upper(r.code) = upper(:code)")
     boolean existsByNameAndCodeAllIgnoreCase(@Param("name") String name, @Param("code") String code);
+
 
 }

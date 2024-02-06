@@ -1,8 +1,11 @@
 package com.example.demo.exception.httpstatus;
 
+import lombok.Getter;
+
 public class InternalServerError extends RuntimeException {
 
     private final String message;
+    @Getter
     private Object data;
 
     public InternalServerError(String message, Object data) {
@@ -19,7 +22,4 @@ public class InternalServerError extends RuntimeException {
         return message;
     }
 
-    public Object getData() {
-        return data;
-    }
 }

@@ -2,7 +2,7 @@ package com.example.demo.security;
 
 import com.example.demo.constant.MessageConstant;
 import com.example.demo.db.entity.UserEntity;
-import com.example.demo.db.reposiroty.UserRepository;
+import com.example.demo.db.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;

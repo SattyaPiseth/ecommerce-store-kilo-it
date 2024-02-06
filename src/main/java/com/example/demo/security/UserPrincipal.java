@@ -3,6 +3,7 @@ package com.example.demo.security;
 import com.example.demo.db.entity.PermissionEntity;
 import com.example.demo.db.entity.UserEntity;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import lombok.Builder;
 import lombok.Data;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;

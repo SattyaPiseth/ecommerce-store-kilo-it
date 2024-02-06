@@ -5,6 +5,7 @@ import lombok.Data;
 import org.springframework.http.HttpStatus;
 
 @Data
+
 public class StructureRS {
     private int status = HttpStatus.OK.value();
     private String message = MessageConstant.SUCCESSFULLY;

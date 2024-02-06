@@ -1,5 +1,6 @@
 package com.example.demo.model.request.auth;
 
+import com.example.demo.exception.anotation.FieldsValueMatch;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Positive;
@@ -17,11 +18,16 @@ import java.util.Set;
 @Getter
 @Setter
 @Builder
+@FieldsValueMatch(field = "password",fieldMatch = "confirmPassword")
 public class RegisterRQ {
     @NotBlank
     String username;
     @NotBlank
     String password;
+
+    @NotBlank
+    String confirmPassword;
+
     @NotBlank
     @Email
     String email;

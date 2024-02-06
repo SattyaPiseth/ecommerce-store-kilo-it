@@ -1,6 +1,7 @@
 package com.example.demo.service.auth;
 
 import com.example.demo.base.StructureRS;
+import com.example.demo.db.entity.UserEntity;
 import com.example.demo.model.request.auth.*;
 import com.example.demo.model.request.mail.VerifyRQ;
 import jakarta.mail.MessagingException;
@@ -37,24 +38,40 @@ public interface AuthService {
     void verifyUser(String token);
 
     /**
-     * Forgot password service
+     * forgot password service
      * @param request of request email address from client
      * @return message for client to reset-password
+     * @throws MessagingException if mail not sent
      */
     StructureRS forgotPassword(ForgotPasswordRQ request) throws MessagingException;
 
     /**
-     * Reset password service
+     * change password service
      * @param request of request data from client email-address,password
      * @return message for client
      */
-    StructureRS resetPassword(ResetPasswordRQ request);
+    StructureRS changePassword(String token,ResetPasswordRQ request);
 
     /**
-     * Verify reset token
-     * @param token of request data from client
+     * Validate password reset token service
+     * @param token of token from client
      * @return true if token is valid
      */
-    boolean verifyResetToken(String token);
+    boolean validatePasswordResetToken(String token);
+
+    /**
+     * Get user by password reset token service
+     * @param token of token from client
+     * @return user entity
+     */
+    UserEntity getUserByPasswordResetToken(String token);
+
+    /**
+     * Resend verification email service
+     * @param email of email from client
+     * @return message for client
+     * @throws MessagingException if mail not sent
+     */
+    StructureRS resendVerificationCodeViaEmail(String email) throws MessagingException;
 
 }

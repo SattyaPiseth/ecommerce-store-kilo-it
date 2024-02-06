@@ -3,9 +3,13 @@ package com.example.demo.db.entity;
 import com.example.demo.base.BaseEntity;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
+import jakarta.persistence.Index;
+import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import lombok.*;
+import org.hibernate.annotations.*;
+import java.util.Date;
 
 
 @Entity
@@ -17,7 +21,7 @@ import lombok.*;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@Builder
+@SQLDelete(sql = "UPDATE users SET deleted = true WHERE id = ?")
 public class UserEntity extends BaseEntity{
 
     @Id
@@ -30,7 +34,7 @@ public class UserEntity extends BaseEntity{
 
     @Size(max = 255)
     @NotNull
-    @Column(name = "username",nullable = false)
+    @Column(name = "username",unique = true,nullable = false)
     private String username;
 
     @JsonIgnore
@@ -72,12 +76,15 @@ public class UserEntity extends BaseEntity{
     @Column(name = "verification_token",unique = true)
     private String verifiedToken;
 
-
-    @Column(name = "verified",columnDefinition = "boolean default false")
-    private Boolean isVerified;
+//    @Column(name = "verified",columnDefinition = "boolean default false")
+//    private Boolean isVerified;
 
     @Column(name = "deleted",columnDefinition = "boolean default false")
     private Boolean isDeleted;
+
+    @Temporal(TemporalType.TIMESTAMP)
+    @Column(name = "deleted_at")
+    private Date deletedAt;
 
     @JsonIgnore
     @ManyToOne(fetch = FetchType.EAGER)

@@ -1,18 +1,19 @@
 package com.example.demo.model.request.auth;
 
-import jakarta.validation.constraints.Email;
+import com.example.demo.exception.anotation.FieldsValueMatch;
 import jakarta.validation.constraints.NotBlank;
 import lombok.Getter;
 
 /**
  * @author Sattya
- * create at 1/31/2024 12:14 AM
+ * create at 2/4/2024 8:36 PM
  */
 @Getter
+@FieldsValueMatch(field = "newPassword",fieldMatch = "confirmPassword")
 public class ResetPasswordRQ {
-    @Email
     @NotBlank
-    String email;
+    String newPassword;
+
     @NotBlank
-    String password;
+    String confirmPassword;
 }

@@ -16,7 +16,7 @@ public class BaseController {
                 .body(structureRS);
     }
 
-    protected ResponseEntity<StructureRS> response() {
+    protected ResponseEntity<StructureRS> response(String uuidCannotBeEmpty, HttpStatus badRequest) {
         return ResponseEntity
                 .status(HttpStatus.OK)
                 .body(new StructureRS(HttpStatus.OK, MessageConstant.SUCCESSFULLY));
